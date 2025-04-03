@@ -1,4 +1,4 @@
-public class Main {
+public class LaunchThread1 {
     public static void main(String[] args) throws InterruptedException {
         /**
          * By default, we are given one thread
