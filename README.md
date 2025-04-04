@@ -129,3 +129,14 @@
 - `notify()` wakes the waiting thread after producing or consuming.
 - Prevents data overwrite and stale reads; ensures **alternating** execution.
 - Classic example of **coordinated thread communication** using intrinsic locks.
+
+## Daemon Threads & Multi-Feature Simulation
+
+- Simulates real-time MS Word features using threads:
+  - `TYPING` → user activity (foreground, normal thread)
+  - `SPELL-CHECK`, `AUTO-SAVE` → background services (daemon threads)
+- `setDaemon(true)` marks threads as daemon — they auto-terminate when all user threads finish.
+- Infinite loops used for background tasks to simulate continuous monitoring.
+- `setPriority()` adjusts relative execution priority (lower number = lower priority).
+- Only `TYPING` thread runs finite loop; when it ends, JVM terminates daemon threads.
+- Useful to understand **daemon threads**, thread naming for behavior control, and background task design.
