@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-class Telusko implements Runnable {
+class Activity implements Runnable {
     @Override
     public void run() {
         try {
@@ -58,11 +58,11 @@ class Telusko implements Runnable {
 
 public class LaunchThread6 {
     public static void main(String[] args) {
-        Telusko t = new Telusko();
+        Activity a = new Activity();
 
-        Thread thread1 = new Thread(t);
-        Thread thread2 = new Thread(t);
-        Thread thread3 = new Thread(t);
+        Thread thread1 = new Thread(a);
+        Thread thread2 = new Thread(a);
+        Thread thread3 = new Thread(a);
 
         thread1.setName("ADD");
         thread2.setName("FOCUS");
