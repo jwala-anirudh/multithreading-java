@@ -107,3 +107,25 @@
 - Classic deadlock example: both threads block forever if timing aligns.
 - Demonstrates why maintaining a consistent locking order is critical in multi-threaded environments.
 - Useful for explaining deadlock conditions and prevention in interviews.
+
+## Intro to Producer-Consumer Without Sync
+
+- Implements basic **producer-consumer pattern** using two threads.
+- `Producer` thread keeps generating integers and storing in shared `Queue`.
+- `Consumer` thread reads from the same `Queue` and prints the last value.
+- Shared resource (`Queue.data`) is **not synchronized** — leads to race conditions.
+- Output may show consumer reading stale or overwritten data.
+- No proper coordination between produce and consume — no wait/notify, no locking.
+- Purpose: to demonstrate why inter-thread communication and synchronization are needed for correctness.
+
+## Producer-Consumer with wait/notify
+
+- Solves race condition issue from previous version using inter-thread communication.
+- `Queue1` uses `synchronized` methods to ensure mutual exclusion.
+- Adds a `flag` to track the state of data (produced or consumed).
+- `wait()` pauses the thread if it's not its turn:
+  - Producer waits if data hasn't been consumed.
+  - Consumer waits if no data has been produced.
+- `notify()` wakes the waiting thread after producing or consuming.
+- Prevents data overwrite and stale reads; ensures **alternating** execution.
+- Classic example of **coordinated thread communication** using intrinsic locks.
