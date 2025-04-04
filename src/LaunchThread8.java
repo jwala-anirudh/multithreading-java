@@ -66,6 +66,16 @@ class Gamma4 implements Runnable {
     }
 }
 
+/**
+ * Before JOIN,
+ * main method starts execution and ends hands over
+ * the control of execution to other threads.
+ *
+ * After JOIN,
+ * I want the main thread to wait until, all the other
+ * threads are completed in execution and then I will
+ * proceed forward with mine.
+ */
 public class LaunchThread8 {
     public static void main(String[] args) throws InterruptedException {
         System.out.println("Main method activity started...");
@@ -85,6 +95,12 @@ public class LaunchThread8 {
         t1.start();
         t2.start();
         t3.start();
+
+        t1.join(); // unless and until t1 completes we don't move forward
+        t2.join(); // similarly for t2
+        t3.join(); // and for t3
+
+        // main thread has to wait until the before joined thread are done
 
         System.out.println(t1.isAlive()); // true
         System.out.println(t2.isAlive()); // true
