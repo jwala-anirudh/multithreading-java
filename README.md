@@ -79,11 +79,31 @@
 - Shows difference between locking the full method vs. locking only the required code block.
 - Helps understand trade-off: **safety vs performance**.
 
-## Thread State Tracking with `isAlive()`
+## Thread Join and Completion Control
 
-- Uses same `Runnable` structure as `LaunchThread5`, but adds thread lifecycle checks.
-- `isAlive()` checks if a thread is currently running or has completed.
-    - Before `start()` → all threads return `false`
-    - After `start()` → should return `true` while threads are still running
-- Helps understand thread lifecycle and verify thread status at runtime.
-- Useful for debugging and managing thread coordination in more complex scenarios.
+- Builds on the previous version by introducing `join()` to manage thread completion order.
+- `join()` makes the main thread wait until the target thread finishes execution.
+- Ensures that `t1`, `t2`, and `t3` fully complete before the main thread proceeds.
+- Prevents premature termination of the main thread while other threads are still running.
+- Still includes `isAlive()` to check thread state before and after `start()` and `join()`.
+- Key learning: `join()` is crucial when thread completion order matters or when you need full coordination between threads.
+
+## Nested Synchronization & Resource Locking
+
+- Simulates two threads (`Rohan`, `Bishnu`) trying to acquire multiple shared resources (books).
+- Each thread tries to lock the same three objects (`java`, `devOps`, `aws`) in the same order using nested `synchronized` blocks.
+- Since both threads access resources in **same sequence**, deadlock is avoided.
+- Demonstrates how nested locks work and why **consistent locking order** is crucial.
+- If threads tried to lock resources in different order, this would risk deadlock.
+- Useful pattern to learn **multi-lock coordination** and how to avoid concurrency issues in shared environments.
+
+## Deadlock Scenario with Inconsistent Lock Order
+
+- Same setup as previous file: two threads (`Rohan`, `Bishnu`) accessing shared book resources.
+- **Key difference**: threads acquire locks in **different order**:
+  - `Rohan`: `AWS → DevOps → Java`
+  - `Bishnu`: `Java → DevOps → AWS`
+- This **mutual dependency** can lead to deadlock — each thread holds one lock and waits for the other.
+- Classic deadlock example: both threads block forever if timing aligns.
+- Demonstrates why maintaining a consistent locking order is critical in multi-threaded environments.
+- Useful for explaining deadlock conditions and prevention in interviews.
